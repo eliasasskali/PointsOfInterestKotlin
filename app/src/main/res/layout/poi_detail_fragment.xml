@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".POIDetailFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:id="@+id/mapView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                    tools:text="Museu D'art Contemporani"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/poi_detail_title"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/mapView" app:layout_constraintTop_toBottomOf="@+id/mapView"
+                    android:layout_marginStart="16dp" android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textSize="24sp" android:fontFamily="@font/roboto_medium"/>
+
+            <TextView
+                    tools:text="Geocoordinates"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/poi_detail_geocoordinates"
+                    app:layout_constraintTop_toBottomOf="@+id/poi_detail_title"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"/>
+
+            <View style="@style/Divider"
+                  android:id="@+id/title_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_geocoordinates"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/>
+
+            <TextView
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet egestas purus. Duis commodo, turpis ac semper pretium, massa lacus consectetur tellus, mollis feugiat tellus libero nec magna. Fusce sed ligula a sapien bibendum ultrices at a ex. Etiam vel egestas nisi. Nullam aliquet vel eros vel porta. Donec iaculis, purus eu consectetur vestibulum, augue velit finibus arcu, id condimentum ex ipsum at nunc. Cras varius enim enim, in luctus turpis lacinia sit amet. Fusce ut velit eget diam commodo feugiat. Fusce mi elit, interdum a quam in, maximus tempor ante. Duis in augue euismod, cursus neque ut, condimentum tellus. Nullam vestibulum, mi et facilisis rutrum, turpis purus pulvinar purus, in viverra augue sem sed urna. Etiam finibus elementum risus, at dignissim orci commodo et.  "
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/poi_detail_description"
+                    app:layout_constraintTop_toBottomOf="@id/title_cell_divider"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"/>
+
+            <View style="@style/Divider"
+                  android:id="@+id/description_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_description"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/>
+
+            <!--<LinearLayout
+                    android:id="@+id/poi_detail_email_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/description_cell_divider"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/icon_email"
+                        android:src="@drawable/icon_mail"
+                        android:importantForAccessibility="no"
+                        android:scaleType="center"
+                        android:padding="16dp"/>
+
+                <TextView
+                        android:id="@+id/poi_detail_mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        tools:text="mail@mail.com" android:fontFamily="@font/roboto_medium"/>
+            </LinearLayout>
+
+
+            <View style="@style/Divider"
+                  android:id="@+id/mail_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_email_cell"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                    android:id="@+id/poi_detail_phone_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/mail_cell_divider"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/icon_phone"
+                        android:src="@drawable/icon_phone"
+                        android:importantForAccessibility="no"
+                        android:scaleType="center"
+                        android:padding="16dp"/>
+
+                <TextView
+                        android:id="@+id/poi_detail_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        tools:text="654321123" android:fontFamily="@font/roboto_medium"/>
+            </LinearLayout>
+
+            <View style="@style/Divider"
+                  android:id="@+id/phone_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_phone_cell"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                    android:id="@+id/poi_detail_transport_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/phone_cell_divider"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/icon_transport"
+                        android:src="@drawable/icon_transport"
+                        android:importantForAccessibility="no"
+                        android:scaleType="center"
+                        android:padding="16dp"/>
+
+                <TextView
+                        android:id="@+id/poi_detail_transport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        tools:text="Transport" android:fontFamily="@font/roboto_medium"/>
+            </LinearLayout>
+
+            <View style="@style/Divider"
+                  android:id="@+id/transport_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_transport_cell"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/>
+
+            <LinearLayout
+                    android:id="@+id/poi_detail_address_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/transport_cell_divider"
+                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/icon_address"
+                        android:src="@drawable/icon_location"
+                        android:importantForAccessibility="no"
+                        android:scaleType="center"
+                        android:padding="16dp"/>
+
+                <TextView
+                        android:id="@+id/poi_detail_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        tools:text="Address" android:fontFamily="@font/roboto_medium"/>
+            </LinearLayout>
+
+            <View style="@style/Divider"
+                  android:id="@+id/address_cell_divider"
+                  app:layout_constraintTop_toBottomOf="@id/poi_detail_address_cell"
+                  app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"/> -->
+
+            <com.worldline.pointsofinterest.CustomDetailCell
+                    android:id="@+id/poi_detail_email_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cell_icon="@drawable/icon_mail"
+                    app:layout_constraintTop_toBottomOf="@id/description_cell_divider"/>
+
+            <com.worldline.pointsofinterest.CustomDetailCell
+                    android:id="@+id/poi_detail_phone_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cell_icon="@drawable/icon_phone"
+                    app:layout_constraintTop_toBottomOf="@id/poi_detail_email_cell"/>
+
+            <com.worldline.pointsofinterest.CustomDetailCell
+                    android:id="@+id/poi_detail_transport_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cell_icon="@drawable/icon_transport"
+                    app:layout_constraintTop_toBottomOf="@id/poi_detail_phone_cell"/>
+
+            <com.worldline.pointsofinterest.CustomDetailCell
+                    android:id="@+id/poi_detail_address_cell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cell_icon="@drawable/icon_location"
+                    app:layout_constraintTop_toBottomOf="@id/poi_detail_transport_cell"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

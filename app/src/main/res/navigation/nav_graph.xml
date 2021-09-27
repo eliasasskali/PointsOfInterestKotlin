@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/poiListFragment">
+
+    <fragment
+            android:id="@+id/poiListFragment"
+            android:name="com.worldline.pointsofinterest.POIListFragment"
+            android:label="Points Of Interest"
+            tools:layout="@layout/poi_list_fragment" >
+        <action
+                android:id="@+id/action_showDetail"
+                app:destination="@id/poiDetailFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/poiDetailFragment"
+            android:name="com.worldline.pointsofinterest.POIDetailFragment"
+            android:label="Point of Interest Detail"
+            tools:layout="@layout/poi_detail_fragment">
+        <argument
+                android:name="selectedPointOfInterestId"
+                app:argType="integer"/>
+    </fragment>
+
+</navigation>
