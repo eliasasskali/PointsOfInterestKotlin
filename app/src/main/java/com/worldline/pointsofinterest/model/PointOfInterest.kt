@@ -24,4 +24,8 @@ data class PointOfInterest(
             address = address?:""
         )
     }
+
+    fun isValid() : Boolean {
+        return (id > 0 && title.isNotEmpty() && geocoordinates.isNotEmpty())
+    }
 }

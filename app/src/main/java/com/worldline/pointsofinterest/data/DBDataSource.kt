@@ -13,24 +13,22 @@ class DBDataSource {
         }
     }
 
-    fun insertPointsOfInterest(pointsOfInterest: List<PointOfInterest>) {
+    fun insertPointOfInterest(pointOfInterest: PointOfInterest) {
         val realm = Realm.getDefaultInstance()
 
-        val pointsOfInterestDB = pointsOfInterest.map { it.toModel() }
-
         realm.beginTransaction()
-        realm.insertOrUpdate(pointsOfInterestDB)
+        realm.insertOrUpdate(pointOfInterest.toModel())
         realm.commitTransaction()
     }
 
-    fun getPointOfInterest(id: Int) : PointOfInterest? {
+    fun getPointOfInterest(id: Int) : PointOfInterest {
         val realm = Realm.getDefaultInstance()
 
         return realm
             .where<PointOfInterestDbDto>()
             .equalTo("id", id)
             .findFirst()
-            ?.toModel()
+            ?.toModel()?: PointOfInterest(id = 0, title = "", geocoordinates = "")
     }
 
     fun filterWithText(searchText: String) : List<PointOfInterest> {
@@ -42,5 +40,22 @@ class DBDataSource {
             .findAll()
             ?.map { it.toModel() }
             ?: listOf()
+    }
+
+    fun databaseIsEmpty() : Boolean {
+        val realm = Realm.getDefaultInstance()
+
+        return realm.isEmpty
+    }
+
+    fun pointOfInterestInDatabase(id: Int) : Boolean {
+        val realm = Realm.getDefaultInstance()
+
+        val pointOfInterest = realm
+            .where<PointOfInterestDbDto>()
+            .equalTo("id", id)
+            .findFirst()
+
+        return pointOfInterest != null
     }
 }
