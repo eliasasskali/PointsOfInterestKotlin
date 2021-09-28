@@ -32,9 +32,10 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Transport"
-                android:fontFamily="@font/roboto_medium"/>
+                android:fontFamily="@font/roboto_regular" android:textSize="16sp"/>
     </LinearLayout>
 
     <View style="@style/Divider"

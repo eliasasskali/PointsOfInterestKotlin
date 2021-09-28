@@ -1,26 +1,35 @@
 package com.worldline.pointsofinterest
 
+import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.RecyclerView
+import com.worldline.pointsofinterest.data.AndroidNetworkStatusChecker
 import com.worldline.pointsofinterest.data.PointsOfInterestRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 class POIListFragment: Fragment() {
     private lateinit var adapter: POIListAdapter
+    val pointsOfInterestRepository: PointsOfInterestRepository by lazy {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val androidNetworkStatusChecker = AndroidNetworkStatusChecker(connectivityManager)
+        PointsOfInterestRepository(androidNetworkStatusChecker)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +38,7 @@ class POIListFragment: Fragment() {
         return inflater.inflate(R.layout.poi_list_fragment, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,8 +69,10 @@ class POIListFragment: Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val pointsOfInterestFiltered = PointsOfInterestRepository().filterWithText(newText?: "")
-                adapter.updatePOIs(pointsOfInterestFiltered)
+                val pointsOfInterestFiltered = context?.let { pointsOfInterestRepository.filterWithText(newText?: "") }
+                if (pointsOfInterestFiltered != null) {
+                    adapter.updatePOIs(pointsOfInterestFiltered)
+                }
                 return false
             }
         })
@@ -83,11 +95,14 @@ class POIListFragment: Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun fetchPointsOfInterest() {
         CoroutineScope(Dispatchers.IO).launch {
-            val pointsOfInterest = PointsOfInterestRepository().fetchPointsOfInterest()
+            val pointsOfInterest = context?.let { pointsOfInterestRepository.fetchPointsOfInterest() }
             launch(Dispatchers.Main) {
-                adapter.updatePOIs(pointsOfInterest)
+                if (pointsOfInterest != null) {
+                    adapter.updatePOIs(pointsOfInterest)
+                }
             }
         }
     }

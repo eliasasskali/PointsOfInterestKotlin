@@ -1,6 +1,7 @@
 package com.worldline.pointsofinterest.data
 
 import com.worldline.pointsofinterest.model.PointOfInterest
+import io.realm.Case
 import io.realm.Realm
 import io.realm.kotlin.where
 
@@ -13,7 +14,15 @@ class DBDataSource {
         }
     }
 
-    fun insertPointOfInterest(pointOfInterest: PointOfInterest) {
+    fun insertPointsOfInterest(pointsOfInterest: List<PointOfInterest>) {
+        val realm = Realm.getDefaultInstance()
+
+        realm.beginTransaction()
+        realm.insertOrUpdate(pointsOfInterest.map { it.toModel() })
+        realm.commitTransaction()
+    }
+
+    fun insertOrUpdatePointOfInterest(pointOfInterest: PointOfInterest) {
         val realm = Realm.getDefaultInstance()
 
         realm.beginTransaction()
@@ -36,7 +45,7 @@ class DBDataSource {
 
         return realm
             .where<PointOfInterestDbDto>()
-            .contains("title", searchText)
+            .contains("title", searchText, Case.INSENSITIVE)
             .findAll()
             ?.map { it.toModel() }
             ?: listOf()
@@ -44,18 +53,6 @@ class DBDataSource {
 
     fun databaseIsEmpty() : Boolean {
         val realm = Realm.getDefaultInstance()
-
         return realm.isEmpty
-    }
-
-    fun pointOfInterestInDatabase(id: Int) : Boolean {
-        val realm = Realm.getDefaultInstance()
-
-        val pointOfInterest = realm
-            .where<PointOfInterestDbDto>()
-            .equalTo("id", id)
-            .findFirst()
-
-        return pointOfInterest != null
     }
 }

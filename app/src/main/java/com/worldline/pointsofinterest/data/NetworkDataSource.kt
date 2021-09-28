@@ -4,7 +4,6 @@ import com.worldline.pointsofinterest.model.PointOfInterest
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class NetworkDataSource {
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
@@ -13,14 +12,12 @@ class NetworkDataSource {
             .build()
     }
 
-    suspend fun fetchPointsOfInterest() : List<PointOfInterest> {
+    suspend fun fetchPointsOfInterest(): List<PointOfInterest> {
         val pointsOfInterestSmallNetwork = getRetrofit().create(APIService::class.java).fetchPointsOfInterest("points")
-        val pois = pointsOfInterestSmallNetwork.list.map { it.toModel() }
-        println(pois)
-        return pois
+        return pointsOfInterestSmallNetwork.list.map { it.toModel() }
     }
 
-    suspend fun fetchPointOfInterestDetail(id: Int) : PointOfInterestNetworkDto {
-        return getRetrofit().create(APIService::class.java).fetchPointOfInterestDetail("points/$id")
+    suspend fun fetchPointOfInterestDetail(id: Int) : PointOfInterest {
+        return getRetrofit().create(APIService::class.java).fetchPointOfInterestDetail("points/$id").toModel()
     }
 }
