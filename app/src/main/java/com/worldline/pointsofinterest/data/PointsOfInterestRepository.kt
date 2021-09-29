@@ -7,7 +7,6 @@ import com.worldline.pointsofinterest.model.PointOfInterest
 class PointsOfInterestRepository(private val networkStatusChecker: AndroidNetworkStatusChecker) {
     @RequiresApi(Build.VERSION_CODES.M)
     suspend fun fetchPointsOfInterest(fromNetwork: Boolean = true) : List<PointOfInterest> {
-
         // Download POIs (small) from internet and insert them in db
         if (fromNetwork && databaseIsEmpty() && networkStatusChecker.hasInternetConnection()) {
             val pointsOfInterestSmall = NetworkDataSource().fetchPointsOfInterest()
@@ -21,7 +20,6 @@ class PointsOfInterestRepository(private val networkStatusChecker: AndroidNetwor
 
     @RequiresApi(Build.VERSION_CODES.M)
     suspend fun fetchPointOfInterestDetail(id: Int, fromNetwork: Boolean = true) : PointOfInterest {
-
         // Download POI detail from internet and return it
         if (fromNetwork && networkStatusChecker.hasInternetConnection()) {
             val pointOfInterest = NetworkDataSource().fetchPointOfInterestDetail(id)
