@@ -22,7 +22,11 @@
         </activity>
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+<<<<<<< HEAD
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value= "${MAPS_API_KEY}"/>
+=======
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="@string/google_maps_api_key" />
+>>>>>>> 59997a7b785457a3ffff09cde374e9c6e70e162a
     </application>
 
 </manifest>
