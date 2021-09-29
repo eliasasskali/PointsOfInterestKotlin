@@ -11,13 +11,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.worldline.pointsofinterest.data.AndroidNetworkStatusChecker
 import com.worldline.pointsofinterest.data.PointsOfInterestRepository
+import com.worldline.pointsofinterest.model.PointOfInterest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class POIDetailFragment: Fragment() {
+class POIDetailFragment: Fragment(), OnMapReadyCallback {
+
+    private lateinit var map: GoogleMap
+
     private val pointsOfInterestRepository: PointsOfInterestRepository by lazy {
         val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkStatusChecker = AndroidNetworkStatusChecker(connectivityManager)
@@ -36,6 +44,10 @@ class POIDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val pointOfInterestId = arguments?.get("selectedPointOfInterestId").toString().toInt()
         fetchPointOfInterest(pointOfInterestId)
+
+        // Setting up map fragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+        mapFragment.getMapAsync(this);
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -57,6 +69,16 @@ class POIDetailFragment: Fragment() {
                                 val phoneCellView = findViewById<View>(R.id.poi_detail_phone_cell)
                                 val transportCellView = findViewById<View>(R.id.poi_detail_transport_cell)
                                 val addressCellView = findViewById<View>(R.id.poi_detail_address_cell)
+
+                                // Adding a marker of the Point Of Interest and move the camera
+                                val coords = pointOfInterest.geocoordinates.split(",")
+                                val geocoordinates = LatLng(coords[0].toDouble(), coords[1].toDouble())
+                                map.addMarker(MarkerOptions()
+                                    .position(geocoordinates)
+                                    .title(pointOfInterest.title)
+                                    .snippet(pointOfInterest.address?:""))
+                                map.moveCamera(CameraUpdateFactory.newLatLng(geocoordinates))
+                                map.setMinZoomPreference(15F)
 
                                 // Setting info
                                 titleView.text = pointOfInterest.title
@@ -105,5 +127,9 @@ class POIDetailFragment: Fragment() {
                 }
             }
         }
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        this.map = map
     }
 }

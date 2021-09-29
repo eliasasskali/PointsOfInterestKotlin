@@ -12,13 +12,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="250dp"
+            <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/mapView"
+                    class="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                     tools:text="Museu D'art Contemporani"
@@ -64,147 +65,6 @@
                   android:layout_marginStart="16dp"
                   android:layout_marginTop="16dp"
                   android:layout_marginEnd="16dp"/>
-
-            <!--<LinearLayout
-                    android:id="@+id/poi_detail_email_cell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/description_cell_divider"
-                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/icon_email"
-                        android:src="@drawable/icon_mail"
-                        android:importantForAccessibility="no"
-                        android:scaleType="center"
-                        android:padding="16dp"/>
-
-                <TextView
-                        android:id="@+id/poi_detail_mail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        tools:text="mail@mail.com" android:fontFamily="@font/roboto_medium"/>
-            </LinearLayout>
-
-
-            <View style="@style/Divider"
-                  android:id="@+id/mail_cell_divider"
-                  app:layout_constraintTop_toBottomOf="@id/poi_detail_email_cell"
-                  app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginTop="16dp"
-                  android:layout_marginEnd="16dp"/>
-
-            <LinearLayout
-                    android:id="@+id/poi_detail_phone_cell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/mail_cell_divider"
-                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/icon_phone"
-                        android:src="@drawable/icon_phone"
-                        android:importantForAccessibility="no"
-                        android:scaleType="center"
-                        android:padding="16dp"/>
-
-                <TextView
-                        android:id="@+id/poi_detail_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        tools:text="654321123" android:fontFamily="@font/roboto_medium"/>
-            </LinearLayout>
-
-            <View style="@style/Divider"
-                  android:id="@+id/phone_cell_divider"
-                  app:layout_constraintTop_toBottomOf="@id/poi_detail_phone_cell"
-                  app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginTop="16dp"
-                  android:layout_marginEnd="16dp"/>
-
-            <LinearLayout
-                    android:id="@+id/poi_detail_transport_cell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/phone_cell_divider"
-                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/icon_transport"
-                        android:src="@drawable/icon_transport"
-                        android:importantForAccessibility="no"
-                        android:scaleType="center"
-                        android:padding="16dp"/>
-
-                <TextView
-                        android:id="@+id/poi_detail_transport"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        tools:text="Transport" android:fontFamily="@font/roboto_medium"/>
-            </LinearLayout>
-
-            <View style="@style/Divider"
-                  android:id="@+id/transport_cell_divider"
-                  app:layout_constraintTop_toBottomOf="@id/poi_detail_transport_cell"
-                  app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginTop="16dp"
-                  android:layout_marginEnd="16dp"/>
-
-            <LinearLayout
-                    android:id="@+id/poi_detail_address_cell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@id/transport_cell_divider"
-                    android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent">
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/icon_address"
-                        android:src="@drawable/icon_location"
-                        android:importantForAccessibility="no"
-                        android:scaleType="center"
-                        android:padding="16dp"/>
-
-                <TextView
-                        android:id="@+id/poi_detail_address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        tools:text="Address" android:fontFamily="@font/roboto_medium"/>
-            </LinearLayout>
-
-            <View style="@style/Divider"
-                  android:id="@+id/address_cell_divider"
-                  app:layout_constraintTop_toBottomOf="@id/poi_detail_address_cell"
-                  app:layout_constraintStart_toStartOf="parent"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginTop="16dp"
-                  android:layout_marginEnd="16dp"/> -->
 
             <com.worldline.pointsofinterest.CustomDetailCell
                     android:id="@+id/poi_detail_email_cell"
