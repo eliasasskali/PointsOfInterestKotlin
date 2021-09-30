@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.findFragment
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
@@ -23,8 +25,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class POIDetailFragment: Fragment(), OnMapReadyCallback {
-
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
+    private lateinit var progressBar: ProgressBar
 
     private val pointsOfInterestRepository: PointsOfInterestRepository by lazy {
         val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -36,7 +38,12 @@ class POIDetailFragment: Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.poi_detail_fragment, container, false)
+        val view = inflater.inflate(R.layout.poi_detail_fragment, container, false)
+        // Setting progress bar
+        progressBar = view.findViewById(R.id.progressBar)
+        progressBar.visibility = View.GONE;
+
+        return view
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -53,6 +60,7 @@ class POIDetailFragment: Fragment(), OnMapReadyCallback {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun fetchPointOfInterest(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
+            progressBar.visibility = View.VISIBLE;
             val pointOfInterest = context?.let { pointsOfInterestRepository.fetchPointOfInterestDetail(id) }
             launch(Dispatchers.Main) {
                 pointOfInterest?.let { pointOfInterest ->
@@ -73,12 +81,17 @@ class POIDetailFragment: Fragment(), OnMapReadyCallback {
                                 // Adding a marker of the Point Of Interest and move the camera
                                 val coords = pointOfInterest.geocoordinates.split(",")
                                 val geocoordinates = LatLng(coords[0].toDouble(), coords[1].toDouble())
-                                map.addMarker(MarkerOptions()
+                                map?.addMarker(MarkerOptions()
                                     .position(geocoordinates)
                                     .title(pointOfInterest.title)
                                     .snippet(pointOfInterest.address?:""))
-                                map.moveCamera(CameraUpdateFactory.newLatLng(geocoordinates))
-                                map.setMinZoomPreference(15F)
+                                map?.moveCamera(CameraUpdateFactory.newLatLng(geocoordinates))
+                                map?.setMinZoomPreference(15F)
+
+                                if (map == null) {
+                                    val mapView = view.findViewById<FragmentContainerView>(R.id.mapView)
+                                    mapView.visibility = View.GONE
+                                }
 
                                 // Setting info
                                 titleView.text = pointOfInterest.title
@@ -117,6 +130,8 @@ class POIDetailFragment: Fragment(), OnMapReadyCallback {
                                 } else {
                                     addressCellView.visibility = View.GONE
                                 }
+
+                                progressBar.visibility = View.GONE;
                             }
                         }
                     }

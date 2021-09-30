@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -98,10 +99,15 @@ class POIListFragment: Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun fetchPointsOfInterest() {
         CoroutineScope(Dispatchers.IO).launch {
-            val pointsOfInterest = context?.let { pointsOfInterestRepository.fetchPointsOfInterest() }
-            launch(Dispatchers.Main) {
-                if (pointsOfInterest != null) {
-                    adapter.updatePOIs(pointsOfInterest)
+            context?.let {
+                val pointsOfInterestResponse = pointsOfInterestRepository.fetchPointsOfInterest()
+                launch(Dispatchers.Main) {
+                    if (pointsOfInterestResponse.success) {
+                        adapter.updatePOIs(pointsOfInterestResponse.pointsOfInterest)
+                    }
+                    else {
+                        Toast.makeText(it, "Network Error", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

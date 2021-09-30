@@ -1,21 +1,29 @@
 package com.worldline.pointsofinterest.data
 
+import android.app.AlertDialog
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.worldline.pointsofinterest.model.PointOfInterest
+import com.worldline.pointsofinterest.model.PointOfInterestResponse
 
-class PointsOfInterestRepository(private val networkStatusChecker: AndroidNetworkStatusChecker) {
+class PointsOfInterestRepository(private val networkStatusChecker: NetworkStatusChecker) {
     @RequiresApi(Build.VERSION_CODES.M)
-    suspend fun fetchPointsOfInterest(fromNetwork: Boolean = true) : List<PointOfInterest> {
+    suspend fun fetchPointsOfInterest(fromNetwork: Boolean = true) : PointOfInterestResponse {
+        // Nothing to show, internet connection needed
+        if (!networkStatusChecker.hasInternetConnection() && databaseIsEmpty()) {
+            println("No network connection.")
+        }
+
         // Download POIs (small) from internet and insert them in db
         if (fromNetwork && databaseIsEmpty() && networkStatusChecker.hasInternetConnection()) {
             val pointsOfInterestSmall = NetworkDataSource().fetchPointsOfInterest()
             DBDataSource().insertPointsOfInterest(pointsOfInterestSmall)
-            return pointsOfInterestSmall
+            return PointOfInterestResponse(pointsOfInterest = pointsOfInterestSmall, success = true)
         }
 
         // Query POIs from the database
-        return DBDataSource().fetchPointsOfInterest()
+        val pointsOfInterestDb = DBDataSource().fetchPointsOfInterest()
+        return PointOfInterestResponse(pointsOfInterest = pointsOfInterestDb, success = pointsOfInterestDb.isNotEmpty())
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
